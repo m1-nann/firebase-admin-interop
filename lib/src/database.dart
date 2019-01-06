@@ -303,7 +303,11 @@ class Reference extends Query {
   ///
   /// The relative [path] can either be a simple child name (for example, "ada")
   /// or a deeper slash-separated path (for example, "ada/name/first").
-  Reference child(String path) => new Reference(nativeInstance.child(path));
+  Reference child(String path) {
+    /// check path is null here when reference is create rather then having error with command is executed
+    if (path == null) throw '[Database] Reference.child(path): path must not be null, currentPath = ${this.toString()}';
+    new Reference(nativeInstance.child(path));
+  }
 
   /// Returns an [OnDisconnect] object.
   ///
