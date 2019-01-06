@@ -40,8 +40,11 @@ class Auth {
   /// and payload.
   Future<String> createCustomToken(String uid,
           [Map<String, String> developerClaims]) =>
-      promiseToFuture(
-          nativeInstance.createCustomToken(uid, jsify(developerClaims)));
+      promiseToFuture(developerClaims != null ?
+          nativeInstance.createCustomToken(uid, jsify(developerClaims))
+          : 
+          nativeInstance.createCustomToken(uid)
+          );
 
   /// Creates a new user.
   Future<UserRecord> createUser(CreateUserRequest properties) =>

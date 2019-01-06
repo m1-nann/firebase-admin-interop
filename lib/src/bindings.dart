@@ -204,7 +204,7 @@ abstract class Auth {
   ///
   /// Returns a promise fulfilled with a custom token string for the provided uid
   /// and payload.
-  external Promise createCustomToken(String uid, developerClaims);
+  external Promise createCustomToken(String uid, [developerClaims]);
 
   /// Creates a new user.
   ///
