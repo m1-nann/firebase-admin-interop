@@ -306,7 +306,7 @@ class Reference extends Query {
   Reference child(String path) {
     /// check path is null here when reference is create rather then having error with command is executed
     if (path == null) throw '[Database] Reference.child(path): path must not be null, currentPath = ${this.toString()}';
-    new Reference(nativeInstance.child(path));
+    return new Reference(nativeInstance.child(path));
   }
 
   /// Returns an [OnDisconnect] object.
