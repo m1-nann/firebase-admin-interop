@@ -590,6 +590,13 @@ class _FirestoreData {
           item = _createJsTimestamp(item);
         } else if (item is js.FieldValue) {
           // no-op
+        } else if (item is Map) {
+          Map<String, dynamic> mappedValues = item;
+          final newItem = _FirestoreData();
+          mappedValues.forEach((key, value2) {
+            newItem._setField(key, value2);
+          });
+          item = newItem;
         } else {
           throw new UnsupportedError(
               'Value of type ${item.runtimeType} is not supported by Firestore.');
