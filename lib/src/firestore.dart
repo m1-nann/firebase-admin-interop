@@ -591,6 +591,7 @@ class _FirestoreData {
         } else if (item is js.FieldValue) {
           // no-op
         } else if (item is Map) {
+          print('item is a Map $item');
           Map<String, dynamic> mappedValues = item;
           final newItem = _FirestoreData();
           mappedValues.forEach((key, value2) {
