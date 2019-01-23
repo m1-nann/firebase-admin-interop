@@ -536,7 +536,6 @@ class _FirestoreData {
     }
     final result = new List();
     for (var item in data) {
-      print(objectKeys(item));
       if (!_isPrimitive(item)) {
         if (_isGeoPoint(item)) {
           js.GeoPoint point = item;
@@ -756,7 +755,6 @@ class DocumentData extends _FirestoreData {
     } else if (_isFieldValue(value)) {
       return _getFieldValue(key);
     } else if (value is List) {
-      print('is list');
       return getList(key, (data) => DocumentData(data).toMap());
     } else {
       return getNestedData(key).toMap();
