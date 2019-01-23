@@ -600,7 +600,7 @@ class _FirestoreData {
           mappedValues.forEach((key, value2) {
             newItem._setField(key, value2);
           });
-          item = newItem;
+          item = newItem.nativeInstance;
         } else {
           throw new UnsupportedError(
               'Value of type ${item.runtimeType} is not supported by Firestore.');
