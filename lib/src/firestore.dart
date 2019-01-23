@@ -406,6 +406,8 @@ class _FirestoreData {
       setReference(key, value);
     } else if (value is List) {
       setList(key, value);
+    } else if (value is Map) {
+      setMap(key, value);
     } else if (value is Timestamp) {
       setTimestamp(key, value);
     } else if (_isFieldValue(value)) {
@@ -608,6 +610,15 @@ class _FirestoreData {
       data.add(item);
     }
     setProperty(nativeInstance, key, data);
+  }
+
+  void setMap(String key, Map value) {
+    assert(key != null);
+    if (value == null) {
+      setProperty(nativeInstance, key, value);
+      return;
+    }
+    setProperty(nativeInstance, key, new DocumentData.fromMap(value).nativeInstance);
   }
 
   DocumentReference getReference(String key) {
