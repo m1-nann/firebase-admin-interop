@@ -527,7 +527,8 @@ class _FirestoreData {
       value is String ||
       value is bool;
 
-  List getList(String key) {
+  List getList(String key,
+      [Map<String, dynamic> Function(dynamic mappedData) childDataCreate]) {
     final data = getProperty(nativeInstance, key);
     if (data == null) return null;
     if (data is! List) {
@@ -535,6 +536,7 @@ class _FirestoreData {
     }
     final result = new List();
     for (var item in data) {
+      print(objectKeys(item));
       if (!_isPrimitive(item)) {
         if (_isGeoPoint(item)) {
           js.GeoPoint point = item;
@@ -553,6 +555,8 @@ class _FirestoreData {
           js.Timestamp ts = item;
           item = new Timestamp(ts.seconds, ts.nanoseconds);
         } else if (item is js.FieldValue) {
+          // is Map, nesting map
+          if (childDataCreate != null) item = childDataCreate(item);
           // no-op
         } else {
           throw new UnsupportedError(
@@ -591,7 +595,6 @@ class _FirestoreData {
         } else if (item is js.FieldValue) {
           // no-op
         } else if (item is Map) {
-          print('item is a Map $item');
           Map<String, dynamic> mappedValues = item;
           final newItem = _FirestoreData();
           mappedValues.forEach((key, value2) {
@@ -753,7 +756,8 @@ class DocumentData extends _FirestoreData {
     } else if (_isFieldValue(value)) {
       return _getFieldValue(key);
     } else if (value is List) {
-      return getList(key);
+      print('is list');
+      return getList(key, (data) => DocumentData(data).toMap());
     } else {
       return getNestedData(key).toMap();
     }
