@@ -699,6 +699,9 @@ class DocumentData extends _FirestoreData {
   @override
   void _setField(String key, value) {
     if (value is Map) {
+      if (!(value is Map<String, dynamic>)) {
+        value = new Map<String, dynamic>.from(value);
+      }
       setNestedData(key, new DocumentData.fromMap(value));
     } else {
       super._setField(key, value);
