@@ -178,11 +178,10 @@ class Query {
   /// [eventType] will be removed. If no [eventType] is
   /// specified, all callbacks for the [Reference] will be removed.
   /// To unsubscribe a specific callback, use [QuerSubscription.cancel] method
-  void off([String eventType]){
-    if (eventType != null){
+  void off([String eventType]) {
+    if (eventType != null) {
       nativeInstance.off(eventType);
-    }
-    else {
+    } else {
       nativeInstance.off();
     }
   }
@@ -305,7 +304,8 @@ class Reference extends Query {
   /// or a deeper slash-separated path (for example, "ada/name/first").
   Reference child(String path) {
     /// check path is null here when reference is create rather then having error with command is executed
-    if (path == null) throw '[Database] Reference.child(path): path must not be null, currentPath = ${this.toString()}';
+    if (path == null)
+      throw '[Database] Reference.child(path): path must not be null, currentPath = ${this.toString()}';
     return new Reference(nativeInstance.child(path));
   }
 
@@ -517,7 +517,7 @@ class TransactionResult<T> {
   final bool aborted;
   final T data;
 
-  static TransactionResult abort = new TransactionResult._(true, null);
+  factory TransactionResult.abort() => new TransactionResult._(true, null);
   static TransactionResult<T> success<T>(T data) =>
       new TransactionResult._(false, data);
 }

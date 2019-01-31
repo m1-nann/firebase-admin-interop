@@ -102,7 +102,7 @@ void main() {
 
       test('transaction abort', () async {
         var result = await refUpdate.transaction((currentData) {
-          return TransactionResult.abort;
+          return TransactionResult.abort();
         });
         expect(result.committed, isFalse);
       });
